@@ -1,0 +1,66 @@
+﻿Source_id,Ingredient_id,lieu,prix,quantité_achat
+1,1,Merci - Marché Maisonneuve,10,1kg
+2,2,Merci - Marché Maisonneuve,,1kg
+3,3,Merci - Marché Maisonneuve,,410g
+4,4,Merci - Marché Maisonneuve,,500g
+5,5,Chez Anna,6,200g
+6,7,Dauphinais - Marché Maisonneuve,,Unit
+7,9,Dauphinais - Marché Maisonneuve,,Unit
+8,53,Dauphinais - Marché Maisonneuve,"5,75",12 unit
+9,10,Dauphinais - Marché Maisonneuve,,Unit
+10,11,Dauphinais - Marché Maisonneuve,,Unit
+11,12,Dauphinais - Marché Maisonneuve,,Unit
+12,13,Dauphinais - Marché Maisonneuve,,Unit
+13,14,"Dauphinais - Marché Maisonneuve, Segal",,300g
+14,6,Merci - Marché Maisonneuve,,400g
+15,8,"Dauphinais - Marché Maisonneuve, Segal",,200g
+16,15,"Dauphinais - Marché Maisonneuve, Segal",,200g
+17,16,Dauphinais - Marché Maisonneuve,,5kg
+18,17,Merci - Marché Maisonneuve,,500ml
+19,18,Merci - Marché Maisonneuve,,500ml
+20,19,Merci - Marché Maisonneuve,,500ml
+21,20,Merci - Marché Maisonneuve,,500ml
+22,21,Fromage - Marché Maisonneuve,,300g
+23,22,Merci - Marché Maisonneuve,,500g
+24,23,"Maxi, Merci - Marché Maisonneuve, Segal",,250g
+25,24,Dauphinais - Marché Maisonneuve,,Unit
+26,25,"Dauphinais - Marché Maisonneuve, Segal",,Unit
+27,26,"Dauphinais - Marché Maisonneuve, Segal",,Unit
+28,27,Dauphinais - Marché Maisonneuve,,Unit
+29,28,"Maxi, Merci - Marché Maisonneuve",,300g
+30,29,Merci - Marché Maisonneuve,,300g
+31,30,Boucherie - Marché Maisonneuve,,400g
+32,31,"Dauphinais - Marché Maisonneuve, Segal",,Unit
+33,32,"Dauphinais - Marché Maisonneuve, Segal",,300g
+34,33,Merci - Marché Maisonneuve,,500ml
+35,34,Merci - Marché Maisonneuve,,500ml
+36,35,Merci - Marché Maisonneuve,,500ml
+37,36,"Dauphinais - Marché Maisonneuve, Maxi",,Unit
+38,37,"Dauphinais - Marché Maisonneuve, Maxi, Segal",,Unit
+39,38,"Maxi, Merci - Marché Maisonneuve, Segal",,200g
+40,39,"Dauphinais - Marché Maisonneuve, Merci - Marché Maisonneuve, Segal",,500g
+41,40,Merci - Marché Maisonneuve,,500ml
+42,41,Dauphinais - Marché Maisonneuve,,Unit
+43,42,Boucherie - Marché Maisonneuve,,200g
+44,43,"Dauphinais - Marché Maisonneuve, Segal",,250g
+45,44,Dauphinais - Marché Maisonneuve,,250g
+46,45,"Maxi, Merci - Marché Maisonneuve",,Unit
+47,46,"Maxi, Merci - Marché Maisonneuve",,Unit
+48,47,"Maxi, Merci - Marché Maisonneuve",,Unit
+49,48,"Maxi, Merci - Marché Maisonneuve, Segal",,500g
+50,49,"Maxi, Merci - Marché Maisonneuve, Segal",,500g
+51,50,"Boucherie - Marché Maisonneuve, Maxi",,100g
+52,51,Merci - Marché Maisonneuve,,400g
+53,52,"Maxi, Merci - Marché Maisonneuve, Segal",,500g
+54,64,Fromage - Marché Maisonneuve,,200g
+55,54,"Merci - Marché Maisonneuve, Segal",,500ml
+56,55,"Maxi, Merci - Marché Maisonneuve",,1000ml
+57,56,"Maxi, Merci - Marché Maisonneuve",,400ml
+58,57,"Maxi, Merci - Marché Maisonneuve",,400ml
+59,58,"Maxi, Merci - Marché Maisonneuve",,750ml
+60,59,"Maxi, Merci - Marché Maisonneuve, Segal",,400ml
+61,60,"Maxi, Merci - Marché Maisonneuve, Segal",,400ml
+62,61,"Maxi, SAQ",,750ml
+63,62,"Maxi, SAQ",,750ml
+64,63,"Dauphinais - Marché Maisonneuve, Maxi, Segal",,200g
+65,65,"Chez Anna, Poissonnier - Marché Maisonneuve",,200g
