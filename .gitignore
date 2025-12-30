@@ -1,3 +1,25 @@
+# Data files (CSV - données locales)
+data/Table1-Ingredient.csv
+data/Table2-Ingredient_Source.csv
+data/Table3-Recettes.csv
+data/Table4-Recette_ingredients.csv
+
+# Backend
+backend/package-lock.json
+backend/seed.js
+backend/seed.sql
+backend/.env
+
+# VS Code
+.vscode/
+
+# Node modules
+node_modules/
+
+# Environment variables
+.env
+.env.local
+
 # Logs
 logs
 *.log
