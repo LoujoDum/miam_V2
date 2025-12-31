@@ -1,0 +1,453 @@
+{
+  "info": {
+    "_postman_id": "5aa7399e-cef8-445c-abb2-b9f6b57fa61e",
+    "name": "Miam_v2_API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Recipes",
+      "item": [
+        {
+          "name": "All recipes",
+          "id": "e4a87d98-3049-4ea2-940a-25dd9720381f",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "URL: {{base_url}}/api/recipes",
+              "host": [
+                "URL"
+              ],
+              "port": " {{base_url}}",
+              "path": [
+                "api",
+                "recipes"
+              ]
+            },
+            "description": "GET - Récupère toutes les recettes\n\nRetourne un array avec toutes les recettes (7 au total).\n\nRéponse (200 OK):  \n\\[  \n{  \n\"recipe_id\": 1,  \n\"nom\": \"Pâtes Carbonara\",  \n\"auteur\": \"Marco\",  \n...  \n}  \n\\]\n\nErreurs: Aucune généralement"
+          },
+          "response": []
+        },
+        {
+          "name": "Recipe 1",
+          "id": "d22b3b8f-142d-4aef-bbce-5b7f8cd44b03",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/recipes/1?id=1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "recipes",
+                "1"
+              ],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "1"
+                }
+              ]
+            },
+            "description": "### Get a specific recipe\n\nRetrieve the details of a single recipe.\n\n**Method:** `GET`  \n**Endpoint:** `{{base_url}}/api/recipes/1?id=1`\n\n---\n\n#### URL structure\n\n- `{{base_url}}` – Workspace variable that stores the base URL of your API (for example: `https://miam.example.com`).\n    \n- Path: `/api/recipes/1`\n    \n    - `1` is the ID of the recipe in the path.\n        \n- Query parameters:\n    \n    - `id` (required in this example): `1` – recipe ID passed as a query parameter.\n        \n\nSo the full request will look like this once `{{base_url}}` is resolved, e.g.:\n\n\\`\\`\\`http  \nGET [https://your-domain.com/api/recipes/1?id=1](https://your-domain.com/api/recipes/1?id=1)\n\nStartFragment\n\n#### Expected behavior\n\n- **200 OK** – Returns the recipe details as JSON (for example: title, ingredients, preparation steps).\n    \n- **4xx errors** – Returned if the recipe does not exist, the ID is invalid, or the request is malformed.\n    \n- **5xx errors** – Returned if the server encounters an internal error.\n    \n\nStartFragment\n\n#### Notes\n\n- Make sure the `{{base_url}}` variable is defined in your active environment (e.g. `https://localhost:3000` during development).\n    \n- You can change the recipe ID by editing both:\n    \n    - the path segment (`/api/recipes/{id}`), and\n        \n    - the `id` query parameter."
+          },
+          "response": []
+        },
+        {
+          "name": "Create a recipe",
+          "id": "3cbf37b6-52d2-4d80-a52a-5542872cd46c",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"nom\": \"Nouvelle recette\",\r\n  \"auteur\": \"Louis\",\r\n  \"details_recette\": \"Recette rapide\",\r\n  \"lien\": \"https://example.com\",\r\n  \"tag\": \"Rapide\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/recipes",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "recipes"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Modify a recipe",
+          "id": "428fb0ea-d98e-4d22-82d0-2798eb8a3fa9",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"nom\": \"Recette modifiée\",\r\n  \"auteur\": \"Louis\",\r\n  \"details_recette\": \"Modifiée\",\r\n  \"lien\": \"https://example.com\",\r\n  \"tag\": \"Classique\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/recipes/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "recipes",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete a recipe",
+          "id": "c6c2fba9-ffe1-49d8-80fc-123adb963ad3",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/recipes/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "recipes",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "id": "7ef4b1e9-1d3f-47a2-943d-fb675ed788cc"
+    },
+    {
+      "name": "Ingredients",
+      "item": [
+        {
+          "name": "All ingredients",
+          "id": "0ce6c9cb-34af-4969-bc68-221abe5c8649",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/ingredients",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "ingredients"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Ingredient by id",
+          "id": "2c0dfff7-f912-4a5a-9fda-dd698115522d",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "Create ingredient",
+          "id": "bcb381cc-e138-4e7e-894b-a6e0795bed56",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"nom\": \"Carotte\",\r\n  \"unit_standard\": \"g\",\r\n  \"gluten_free\": true,\r\n  \"fibre\": 2.8\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/ingredients",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "ingredients"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Modify ingredient",
+          "id": "0f9b2412-1e6a-4692-b3a4-964b5d61f0b3",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/ingredients/67",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "ingredients",
+                "67"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete ingredient",
+          "id": "81e18ff1-df1e-4316-a484-377d16c1c547",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/ingredients/67",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "ingredients",
+                "67"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "id": "ff4c6d47-e94b-41ee-adaa-8373b4e1f94b"
+    },
+    {
+      "name": "Recipe_ingredients",
+      "item": [
+        {
+          "name": "Ingredients of a recipe",
+          "id": "10343af3-e35c-4eec-81e0-77476f1d26b8",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "Add an ingredient to a recipe",
+          "id": "8f1caab9-0609-487f-b3b7-d569e4955a5b",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"ingredient_id\": 5,\r\n  \"quantite\": 400,\r\n  \"unit\": \"g\",\r\n  \"comment\": \"Frais\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/recipes/1/ingredients",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "recipes",
+                "1",
+                "ingredients"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Modify an ingredient part of the recipe",
+          "id": "568cab90-6950-4d32-99f6-09d626fb0669",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/recipes/1/ingredients/5",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "recipes",
+                "1",
+                "ingredients",
+                "5"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Remove ingredient from recipe",
+          "id": "218b4568-b799-4152-8b98-9799da9cd5f5",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/recipes/1/ingredients/5",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "recipes",
+                "1",
+                "ingredients",
+                "5"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "id": "9102b3f3-6c45-439c-a96d-1ccce53d02dd"
+    },
+    {
+      "name": "ingredient_sources",
+      "item": [
+        {
+          "name": "Sources of ingredient",
+          "id": "a7efc5ca-fd54-4b79-b411-45660a5df821",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "Add source",
+          "id": "f67dd381-321a-46e8-b3b3-3999c88f231c",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/ingredients/5/sources",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "ingredients",
+                "5",
+                "sources"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "New Request",
+          "id": "18a30b68-5488-43ae-8394-a1a05f1fa78d",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"lieu\": \"Leclerc\",\r\n  \"prix\": 2.99,\r\n  \"quantite_achat\": \"500g\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/ingredients/5/sources/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "ingredients",
+                "5",
+                "sources",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete source",
+          "id": "0c0dcbb6-0d2d-4b49-9137-add2fc495ea8",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/ingredients/5/sources/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "ingredients",
+                "5",
+                "sources",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "id": "77dd9b27-b2f3-41c2-990d-7eeba3f75569"
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "id": "19c9ebe6-bf44-4436-9018-50cd458bf70d",
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "id": "fd622eaf-9342-45b5-9bf2-f33378ccf10c",
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "id": "88ed0d49-5a88-4c6b-b97c-d3333d705d33",
+      "key": "base_url",
+      "value": ""
+    }
+  ]
+}
