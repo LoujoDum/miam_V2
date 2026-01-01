@@ -13,6 +13,9 @@ backend/.env
 # VS Code
 .vscode/
 
+#Postman
+.postman/
+
 # Node modules
 node_modules/
 

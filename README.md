@@ -115,10 +115,10 @@ CREATE TABLE recipes (
 -- ... (voir le document de progression pour toutes les tables)
 ```
 
-#### 5. Importer les données initiales
+#### 5. Importer les données initiales  -- Pas fonctionnel pour le moment
 
 ```bash
-psql -U postgres -d miam_v2 -f backend/seed.sql
+psql -U postgres -d miam_v2 -f backend/seed.sql 
 ```
 
 ---
@@ -684,7 +684,7 @@ MIT - Libre d'utilisation
 ## Support
 
 Pour toute question:
-- 📧 Email: [ton email]
+- 📧 Email: [louis.ldumoulin@gmail.com]
 - 🔗 GitHub: https://github.com/LoujoDum/miam_V2
 - 📋 Issues: https://github.com/LoujoDum/miam_V2/issues
 
