@@ -1,89 +1,42 @@
-import { useEffect, useState } from 'react';
-import * as api from './services/api';
+import { useState } from 'react';
+import Header from './components/Header';
 
 export default function App() {
-  const [recipes, setRecipes] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [recipeDetail, setRecipeDetail] = useState(null);
-
-  useEffect(() => {
-    loadRecipes();
-    loadRecipeById(2);
-  }, []);
-
-  async function loadRecipes() {
-    try {
-      setLoading(true);
-      const data = await api.getRecipes();
-      setRecipes(data);
-      console.log('Recettes chargées:', data);
-    } catch (err) {
-      setError(err.message);
-      console.error('Erreur:', err);
-    } finally {
-      setLoading(false);
-    }
-  }
-
- async function loadRecipeById(id) {
-    try {
-      setLoading(true);
-      const data = await api.getRecipeById(id);
-      setRecipeDetail(data);
-      console.log('Recette by id chargée:', data);
-    } catch (err) {
-      setError(err.message);
-      console.error('Erreur:', err);
-    } finally {
-      setLoading(false);
-    }
-  }
-  
+  const [activeTab, setActiveTab] = useState('recipes');
 
   return (
-    <div className="min-h-screen bg-gray-100 p-8">
-      <div className="max-w-4xl mx-auto">
-        <h1 className="text-4xl font-bold text-gray-900 mb-4">
-          Test API
-        </h1>
-
-        {loading && <p className="text-gray-600">Chargement...</p>}
-
-        {error && (
-          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
-            Erreur: {error}
-          </div>
-        )}
-
-        {!loading && !error && (
+    <div className="min-h-screen bg-gray-50">
+      <Header activeTab={activeTab} setActiveTab={setActiveTab} />
+      
+      <main className="max-w-6xl mx-auto px-8 py-12">
+        {activeTab === 'recipes' && (
           <div>
-            <p className="text-gray-600 mb-4">
-              {recipes.length} recettes chargées avec succès! ✅
-            </p>
-            <div className="bg-white rounded-lg p-4 shadow">
-              <h2 className="font-bold mb-2">Recettes:</h2>
-              <ul className="space-y-2">
-                {recipes.map(recipe => (
-                  <li key={recipe.recipe_id} className="text-gray-700">
-                    • {recipe.nom} (par {recipe.auteur})
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="bg-white rounded-lg p-4 shadow">
-             <h2 className="font-bold mb-2">Recette 2:</h2>
-              <ul className="space-y-2">
-               {recipeDetail && (  // ✅ Si recipeDetail existe
-                 <li className="text-gray-700">
-                • {recipeDetail.nom} (par {recipeDetail.auteur})
-                </li>
-                )}
-              </ul>
-            </div>
+            <h2 className="text-2xl font-bold mb-4">Recipe List</h2>
+            <p className="text-gray-600">Les recettes vont ici</p>
           </div>
         )}
-      </div>
+        
+        {activeTab === 'ingredients' && (
+          <div>
+            <h2 className="text-2xl font-bold mb-4">Ingredient List</h2>
+            <p className="text-gray-600">Les ingrédients vont ici</p>
+          </div>
+        )}
+        
+        {activeTab === 'grocery' && (
+          <div>
+            <h2 className="text-2xl font-bold mb-4">Grocery List</h2>
+            <p className="text-gray-600">La liste de course va ici</p>
+          </div>
+        )}
+        
+        {activeTab === 'calendar' && (
+          <div>
+            <h2 className="text-2xl font-bold mb-4">Calendar</h2>
+            <p className="text-gray-600">Le calendrier va ici</p>
+          </div>
+        )}
+      </main>
     </div>
   );
 }
