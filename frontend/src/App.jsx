@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Header from './components/Header';
+import RecipeList from './pages/RecipeList';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('recipes');
@@ -9,12 +10,7 @@ export default function App() {
       <Header activeTab={activeTab} setActiveTab={setActiveTab} />
       
       <main className="max-w-6xl mx-auto px-8 py-12">
-        {activeTab === 'recipes' && (
-          <div>
-            <h2 className="text-2xl font-bold mb-4">Recipe List</h2>
-            <p className="text-gray-600">Les recettes vont ici</p>
-          </div>
-        )}
+        {activeTab === 'recipes' && <RecipeList />}  {/* ← Utiliser le composant */}
         
         {activeTab === 'ingredients' && (
           <div>

@@ -163,7 +163,10 @@
           "id": "2c0dfff7-f912-4a5a-9fda-dd698115522d",
           "request": {
             "method": "GET",
-            "header": []
+            "header": [],
+            "url": {
+              "raw": ""
+            }
           },
           "response": []
         },
@@ -246,7 +249,10 @@
           "id": "10343af3-e35c-4eec-81e0-77476f1d26b8",
           "request": {
             "method": "GET",
-            "header": []
+            "header": [],
+            "url": {
+              "raw": ""
+            }
           },
           "response": []
         },
@@ -335,7 +341,10 @@
           "id": "a7efc5ca-fd54-4b79-b411-45660a5df821",
           "request": {
             "method": "GET",
-            "header": []
+            "header": [],
+            "url": {
+              "raw": ""
+            }
           },
           "response": []
         },
@@ -417,35 +426,9 @@
       "id": "77dd9b27-b2f3-41c2-990d-7eeba3f75569"
     }
   ],
-  "event": [
-    {
-      "listen": "prerequest",
-      "script": {
-        "id": "19c9ebe6-bf44-4436-9018-50cd458bf70d",
-        "type": "text/javascript",
-        "packages": {},
-        "requests": {},
-        "exec": [
-          ""
-        ]
-      }
-    },
-    {
-      "listen": "test",
-      "script": {
-        "id": "fd622eaf-9342-45b5-9bf2-f33378ccf10c",
-        "type": "text/javascript",
-        "packages": {},
-        "requests": {},
-        "exec": [
-          ""
-        ]
-      }
-    }
-  ],
   "variable": [
     {
-      "id": "88ed0d49-5a88-4c6b-b97c-d3333d705d33",
+      "id": "a3057e7f-38ba-4046-ae0b-26ead6689ec9",
       "key": "base_url",
       "value": ""
     }
