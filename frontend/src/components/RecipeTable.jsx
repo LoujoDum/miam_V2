@@ -1,4 +1,4 @@
-export default function RecipeTable({ recipes, loading, error, onAddRecipe }) {
+export default function RecipeTable({ recipes, loading, error, onAddRecipe, onModifyRecipe, onDeleteRecipe }) {
   return (
     <div className="space-y-4">
       {/* Bouton Add Recipe */}
@@ -37,6 +37,7 @@ export default function RecipeTable({ recipes, loading, error, onAddRecipe }) {
                 <th className="px-6 py-3 text-left">Link</th>
                 <th className="px-6 py-3 text-left">GF</th>
                 <th className="px-6 py-3 text-left">Tag</th>
+                <th className="px-6 py-3 text-left">Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -81,6 +82,22 @@ export default function RecipeTable({ recipes, loading, error, onAddRecipe }) {
                         </div>
                       )}
                     </td>
+                    <td className="px-6 py-4">
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => onModifyRecipe(recipe)}
+                        className="px-3 py-1 text-sm bg-blue-100 text-blue-800 rounded hover:bg-blue-200 font-medium"
+                      >
+                        Modify
+                      </button>
+                      <button
+                        onClick={() => onDeleteRecipe(recipe.recipe_id, recipe.nom)}
+                        className="px-3 py-1 text-sm bg-red-100 text-red-800 rounded hover:bg-red-200 font-medium"
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </td>       
                 </tr>
               ))}
             </tbody>
