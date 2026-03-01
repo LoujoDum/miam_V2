@@ -111,3 +111,18 @@ export function updateSource(ingredientId, sourceId, data) {
 export function deleteSource(ingredientId, sourceId) {
   return request('DELETE', `/ingredients/${ingredientId}/sources/${sourceId}`);
 }
+// ============================================
+// SOURCES (vues globales)
+// ============================================
+
+export function getAllSources() {
+  return request('GET', '/sources');
+}
+
+export function getSourcesByIngredient() {
+  return request('GET', '/sources/by-ingredient');
+}
+
+export function getStores() {
+  return request('GET', '/stores');
+}

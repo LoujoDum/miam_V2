@@ -89,12 +89,8 @@ app.get('/api/recipes/:id/ingredients', async (req, res) => {
       [recipeId]
     );
     
-    // Vérifie si la liste d'ingredients existe
-    if (result.rows.length === 0) {
-      res.status(404).json({ error: 'Liste ingredients non trouvée' });
-    } else {
-      res.json(result.rows);  // Retourne UNE liste d'ingredients
-    }
+    // Renvoyer la liste si vide pas de problème
+    res.json(result.rows);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -121,13 +117,7 @@ app.get('/api/ingredients/:id/sources', async(req,res)=>{
     'SELECT i.ingredient_id, i.nom, isou.lieu, isou.prix, isou.quantite_achat FROM ingredients i JOIN ingredient_sources isou ON i.ingredient_id = isou.ingredient_id WHERE i.ingredient_id = $1',
     [IngredientId]
   );
-
-  //On vérifie si l'ingrédient existe
-  if(result.rows.length === 0){
-    res.status(404).json({error:'Liste de sources non trouvées pour cet ingrédient'});
-  }else {
-    res.json(result.rows); // retourne une liste d'ingrédients avec leurs sources
-  }
+ res.json(result.rows); // Retourne [] si pas de sources, c'est normal
  } catch(err){
   res.status(500).json({error: err.message})
  }
@@ -462,6 +452,50 @@ app.delete('/api/ingredients/:id/sources/:srcId', async (req, res) => {
     } else {
       res.json(result.rows[0]);  // Confirmation (ce qu'on a supprimé)
     }
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+// 19 - GET /api/sources 
+// retourne toutes les sources en liste plate. Utile pour avoir une vue complète des données.
+app.get('/api/sources', async (req, res) => {
+  try {
+    console.log('Route /api/sources called');
+    const result = await pool.query('SELECT i.ingredient_id, i.nom, isou.lieu, isou.prix, isou.quantite_achat FROM ingredients i JOIN ingredient_sources isou ON i.ingredient_id = isou.ingredient_id');
+    console.log('Query result:', result.rows);
+    res.json(result.rows);
+  } catch (err) {
+    console.error('Error in /api/sources:', err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// 20 - GET /api/sources/by-ingredient
+// Retourne toutes les sources groupées par ingrédient
+app.get('/api/sources/by-ingredient', async (req, res) => {
+  try {
+    const result = await pool.query(
+      `SELECT i.ingredient_id, i.nom, 
+       array_agg(isou.lieu) as lieux
+       FROM ingredients i 
+       JOIN ingredient_sources isou ON i.ingredient_id = isou.ingredient_id 
+       GROUP BY i.ingredient_id, i.nom 
+       ORDER BY i.nom`
+    );
+    res.json(result.rows);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// 21 - GET /api/stores
+// Retourne tous les lieux uniques (pour les cases à cocher)
+app.get('/api/stores', async (req, res) => {
+  try {
+    const result = await pool.query(
+      'SELECT DISTINCT lieu FROM ingredient_sources ORDER BY lieu'
+    );
+    res.json(result.rows.map(r => r.lieu));
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

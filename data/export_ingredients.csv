@@ -1,0 +1,68 @@
+ingredient_id,nom,unit_standard,gluten_free,fibre,created_at
+1,Rice,g,t,0.00,2025-12-27 11:52:52.104676
+2,Brown Rice,g,t,2.00,2025-12-27 11:52:52.104676
+3,GF Pasta,g,t,1.40,2025-12-27 11:52:52.104676
+4,Pasta,g,f,1.80,2025-12-27 11:52:52.104676
+5,Pesto,g,t,1.00,2025-12-27 11:52:52.104676
+6,Lentille coraille,g,t,,2025-12-27 11:52:52.104676
+7,Oignon,Unit,t,,2025-12-27 11:52:52.104676
+8,Épinard ,g,t,,2025-12-27 11:52:52.104676
+9,Poivron,Unit,t,,2025-12-27 11:52:52.104676
+10,Ail,Clove,t,,2025-12-27 11:52:52.104676
+11,Aubergine,Unit,t,,2025-12-27 11:52:52.104676
+12,Courgette,Unit,t,,2025-12-27 11:52:52.104676
+13,Tomate classique ,Unit,t,,2025-12-27 11:52:52.104676
+14,Tomate cerises,g,t,,2025-12-27 11:52:52.104676
+15,Brocoli ,g,t,,2025-12-27 11:52:52.104676
+16,Pomme de terre,kg,t,,2025-12-27 11:52:52.104676
+17,Pois chiche ,ml,t,,2025-12-27 11:52:52.104676
+18,Kidney beans,ml,t,,2025-12-27 11:52:52.104676
+19,Tomate en des,ml,t,,2025-12-27 11:52:52.104676
+20,Jus de tomate,ml,t,,2025-12-27 11:52:52.104676
+21,Parmesan,g,t,,2025-12-27 11:52:52.104676
+22,Quinoa,g,t,,2025-12-27 11:52:52.104676
+23,Humus,g,t,,2025-12-27 11:52:52.104676
+24,Cilantro / coriandre,Unit,t,,2025-12-27 11:52:52.104676
+25,Avocado,Unit,t,,2025-12-27 11:52:52.104676
+26,Lemon,Unit,t,,2025-12-27 11:52:52.104676
+27,Lime,Unit,t,,2025-12-27 11:52:52.104676
+28,Rice noodle,g,t,,2025-12-27 11:52:52.104676
+29,Angel hair,g,t,,2025-12-27 11:52:52.104676
+30,Blanc de poulet,g,t,,2025-12-27 11:52:52.104676
+31,Concombre anglais,Unit,t,,2025-12-27 11:52:52.104676
+32,Concombre libanais,Unit,t,,2025-12-27 11:52:52.104676
+33,Vinaigre de riz,ml,t,,2025-12-27 11:52:52.104676
+34,Soy sauce gf,ml,t,,2025-12-27 11:52:52.104676
+35,Soy sauce non gf,ml,f,,2025-12-27 11:52:52.104676
+36,Carotte,Unit,t,,2025-12-27 11:52:52.104676
+37,Ciboulette,Unit,t,,2025-12-27 11:52:52.104676
+38,Peanut butter,g,t,,2025-12-27 11:52:52.104676
+39,Peanuts,g,t,,2025-12-27 11:52:52.104676
+40,Vinaigre de cidre,ml,t,,2025-12-27 11:52:52.104676
+41,Gingembre,Unit,t,,2025-12-27 11:52:52.104676
+42,Joue de boeuf,g,t,,2025-12-27 11:52:52.104676
+43,Champignon blanc,g,t,,2025-12-27 11:52:52.104676
+44,Champignon brun,g,t,,2025-12-27 11:52:52.104676
+45,Bouillon de cube boeuf,Unit,t,,2025-12-27 11:52:52.104676
+46,Bouillon de cube Poulet,Unit,t,,2025-12-27 11:52:52.104676
+47,Bouillon de cube Vege,Unit,t,,2025-12-27 11:52:52.104676
+48,Farine de blé,g,f,,2025-12-27 11:52:52.104676
+49,Farine all purpose GF,g,t,,2025-12-27 11:52:52.104676
+50,Ground beef / boeuf haché,g,t,,2025-12-27 11:52:52.104676
+51,Vege fake ground beef,g,t,,2025-12-27 11:52:52.104676
+52,Semoule  /  Couscous ,g,f,,2025-12-27 11:52:52.104676
+53,Oeuf,Unit,t,,2025-12-27 11:52:52.104676
+54,Black Beans,ml,t,,2025-12-27 11:52:52.104676
+55,Huile d’olive,ml,t,,2025-12-27 11:52:52.104676
+56,Ketchup,ml,t,,2025-12-27 11:52:52.104676
+57,Mayonnaise,ml,t,,2025-12-27 11:52:52.104676
+58,Balsamique vinaigre,ml,t,,2025-12-27 11:52:52.104676
+59,Dijon Moutarde,ml,t,,2025-12-27 11:52:52.104676
+60,Moutarde à l’ancienne,ml,t,,2025-12-27 11:52:52.104676
+61,Vin blanc,ml,t,,2025-12-27 11:52:52.104676
+62,Vin rouge,ml,t,,2025-12-27 11:52:52.104676
+63,Oignon rouge,Unit,t,,2025-12-27 11:52:52.104676
+64,Feta,g,t,,2025-12-27 11:52:52.104676
+65,Poisson blanc,g,t,,2025-12-27 11:52:52.104676
+66,Cr�me fraiche,g,t,,2025-12-30 10:10:18.162757
+67,Lardon,g,t,,2025-12-30 10:10:32.945626

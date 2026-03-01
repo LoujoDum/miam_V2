@@ -1,0 +1,66 @@
+source_id,ingredient_id,lieu,prix,quantite_achat,created_at
+1,1,Merci - Marché Maisonneuve,10.00,1kg,2025-12-27 11:53:09.810077
+2,2,Merci - Marché Maisonneuve,,1kg,2025-12-27 11:53:09.810077
+3,3,Merci - Marché Maisonneuve,,410g,2025-12-27 11:53:09.810077
+4,4,Merci - Marché Maisonneuve,,500g,2025-12-27 11:53:09.810077
+5,5,Chez Anna,6.00,200g,2025-12-27 11:53:09.810077
+6,7,Dauphinais - Marché Maisonneuve,,Unit,2025-12-27 11:53:09.810077
+7,9,Dauphinais - Marché Maisonneuve,,Unit,2025-12-27 11:53:09.810077
+8,53,Dauphinais - Marché Maisonneuve,5.75,12 unit,2025-12-27 11:53:09.810077
+9,10,Dauphinais - Marché Maisonneuve,,Unit,2025-12-27 11:53:09.810077
+10,11,Dauphinais - Marché Maisonneuve,,Unit,2025-12-27 11:53:09.810077
+11,12,Dauphinais - Marché Maisonneuve,,Unit,2025-12-27 11:53:09.810077
+12,13,Dauphinais - Marché Maisonneuve,,Unit,2025-12-27 11:53:09.810077
+13,14,"Dauphinais - Marché Maisonneuve, Segal",,300g,2025-12-27 11:53:09.810077
+14,6,Merci - Marché Maisonneuve,,400g,2025-12-27 11:53:09.810077
+15,8,"Dauphinais - Marché Maisonneuve, Segal",,200g,2025-12-27 11:53:09.810077
+16,15,"Dauphinais - Marché Maisonneuve, Segal",,200g,2025-12-27 11:53:09.810077
+17,16,Dauphinais - Marché Maisonneuve,,5kg,2025-12-27 11:53:09.810077
+18,17,Merci - Marché Maisonneuve,,500ml,2025-12-27 11:53:09.810077
+19,18,Merci - Marché Maisonneuve,,500ml,2025-12-27 11:53:09.810077
+20,19,Merci - Marché Maisonneuve,,500ml,2025-12-27 11:53:09.810077
+21,20,Merci - Marché Maisonneuve,,500ml,2025-12-27 11:53:09.810077
+22,21,Fromage - Marché Maisonneuve,,300g,2025-12-27 11:53:09.810077
+23,22,Merci - Marché Maisonneuve,,500g,2025-12-27 11:53:09.810077
+24,23,"Maxi, Merci - Marché Maisonneuve, Segal",,250g,2025-12-27 11:53:09.810077
+25,24,Dauphinais - Marché Maisonneuve,,Unit,2025-12-27 11:53:09.810077
+26,25,"Dauphinais - Marché Maisonneuve, Segal",,Unit,2025-12-27 11:53:09.810077
+27,26,"Dauphinais - Marché Maisonneuve, Segal",,Unit,2025-12-27 11:53:09.810077
+28,27,Dauphinais - Marché Maisonneuve,,Unit,2025-12-27 11:53:09.810077
+29,28,"Maxi, Merci - Marché Maisonneuve",,300g,2025-12-27 11:53:09.810077
+30,29,Merci - Marché Maisonneuve,,300g,2025-12-27 11:53:09.810077
+31,30,Boucherie - Marché Maisonneuve,,400g,2025-12-27 11:53:09.810077
+32,31,"Dauphinais - Marché Maisonneuve, Segal",,Unit,2025-12-27 11:53:09.810077
+33,32,"Dauphinais - Marché Maisonneuve, Segal",,300g,2025-12-27 11:53:09.810077
+34,33,Merci - Marché Maisonneuve,,500ml,2025-12-27 11:53:09.810077
+35,34,Merci - Marché Maisonneuve,,500ml,2025-12-27 11:53:09.810077
+36,35,Merci - Marché Maisonneuve,,500ml,2025-12-27 11:53:09.810077
+37,36,"Dauphinais - Marché Maisonneuve, Maxi",,Unit,2025-12-27 11:53:09.810077
+38,37,"Dauphinais - Marché Maisonneuve, Maxi, Segal",,Unit,2025-12-27 11:53:09.810077
+39,38,"Maxi, Merci - Marché Maisonneuve, Segal",,200g,2025-12-27 11:53:09.810077
+40,39,"Dauphinais - Marché Maisonneuve, Merci - Marché Maisonneuve, Segal",,500g,2025-12-27 11:53:09.810077
+41,40,Merci - Marché Maisonneuve,,500ml,2025-12-27 11:53:09.810077
+42,41,Dauphinais - Marché Maisonneuve,,Unit,2025-12-27 11:53:09.810077
+43,42,Boucherie - Marché Maisonneuve,,200g,2025-12-27 11:53:09.810077
+44,43,"Dauphinais - Marché Maisonneuve, Segal",,250g,2025-12-27 11:53:09.810077
+45,44,Dauphinais - Marché Maisonneuve,,250g,2025-12-27 11:53:09.810077
+46,45,"Maxi, Merci - Marché Maisonneuve",,Unit,2025-12-27 11:53:09.810077
+47,46,"Maxi, Merci - Marché Maisonneuve",,Unit,2025-12-27 11:53:09.810077
+48,47,"Maxi, Merci - Marché Maisonneuve",,Unit,2025-12-27 11:53:09.810077
+49,48,"Maxi, Merci - Marché Maisonneuve, Segal",,500g,2025-12-27 11:53:09.810077
+50,49,"Maxi, Merci - Marché Maisonneuve, Segal",,500g,2025-12-27 11:53:09.810077
+51,50,"Boucherie - Marché Maisonneuve, Maxi",,100g,2025-12-27 11:53:09.810077
+52,51,Merci - Marché Maisonneuve,,400g,2025-12-27 11:53:09.810077
+53,52,"Maxi, Merci - Marché Maisonneuve, Segal",,500g,2025-12-27 11:53:09.810077
+54,64,Fromage - Marché Maisonneuve,,200g,2025-12-27 11:53:09.810077
+55,54,"Merci - Marché Maisonneuve, Segal",,500ml,2025-12-27 11:53:09.810077
+56,55,"Maxi, Merci - Marché Maisonneuve",,1000ml,2025-12-27 11:53:09.810077
+57,56,"Maxi, Merci - Marché Maisonneuve",,400ml,2025-12-27 11:53:09.810077
+58,57,"Maxi, Merci - Marché Maisonneuve",,400ml,2025-12-27 11:53:09.810077
+59,58,"Maxi, Merci - Marché Maisonneuve",,750ml,2025-12-27 11:53:09.810077
+60,59,"Maxi, Merci - Marché Maisonneuve, Segal",,400ml,2025-12-27 11:53:09.810077
+61,60,"Maxi, Merci - Marché Maisonneuve, Segal",,400ml,2025-12-27 11:53:09.810077
+62,61,"Maxi, SAQ",,750ml,2025-12-27 11:53:09.810077
+63,62,"Maxi, SAQ",,750ml,2025-12-27 11:53:09.810077
+64,63,"Dauphinais - Marché Maisonneuve, Maxi, Segal",,200g,2025-12-27 11:53:09.810077
+65,65,"Chez Anna, Poissonnier - Marché Maisonneuve",,200g,2025-12-27 11:53:09.810077

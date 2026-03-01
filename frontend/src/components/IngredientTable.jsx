@@ -1,7 +1,8 @@
 export default function IngredientTable({ 
   ingredients, 
   loading, 
-  error, 
+  error,
+  sourcesByIngredient = [], 
   onAddIngredient,
   onModifyIngredient,
   onDeleteIngredient 
@@ -42,6 +43,7 @@ export default function IngredientTable({
                 <th className="px-6 py-3 text-left">Unit Standard</th>
                 <th className="px-6 py-3 text-left">Gluten Free</th>
                 <th className="px-6 py-3 text-left">Fibre</th>
+                <th className="px-6 py-3 text-left">Sources</th>
                 <th className="px-6 py-3 text-left">Actions</th>
               </tr>
             </thead>
@@ -59,6 +61,14 @@ export default function IngredientTable({
                   </td>
                   <td className="px-6 py-4 text-gray-600">
                     {ingredient.fibre || '-'}
+                  </td>
+                  <td className="px-6 py-4 text-gray-600 text-sm">
+                    {(() => {
+                     const sourcesData = sourcesByIngredient.find(
+                       s => s.ingredient_id === ingredient.ingredient_id
+                    );
+                    return sourcesData ? sourcesData.lieux.join(', ') : '-';
+                   })()}
                   </td>
                   <td className="px-6 py-4">
                     <div className="flex gap-2">

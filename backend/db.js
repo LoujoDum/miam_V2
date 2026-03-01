@@ -8,6 +8,7 @@ const pool = new Pool({
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
+  options: '-c client_encoding=UTF8'
 });
 
 pool.on('error', (err) => {

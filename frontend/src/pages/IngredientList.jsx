@@ -11,10 +11,21 @@ export default function IngredientList() {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isModifyModalOpen, setIsModifyModalOpen] = useState(false);
   const [ingredientToModify, setIngredientToModify] = useState(null);
+  const [sourcesByIngredient, setSourcesByIngredient] = useState([]);
 
   useEffect(() => {
     loadIngredients();
+    loadSources();
   }, []);
+
+  async function loadSources() {
+  try {
+    const data = await api.getSourcesByIngredient();
+    setSourcesByIngredient(data);
+  } catch (err) {
+    console.error('Erreur sources:', err);
+  }
+}
 
   async function loadIngredients() {
     try {
@@ -41,6 +52,7 @@ export default function IngredientList() {
 
   function handleIngredientModified() {
     loadIngredients();
+    loadSources(); 
   }
 
   async function handleDeleteIngredient(ingredientId, ingredientName) {
@@ -62,6 +74,7 @@ export default function IngredientList() {
         ingredients={ingredients} 
         loading={loading} 
         error={error}
+        sourcesByIngredient={sourcesByIngredient}
         onAddIngredient={() => setIsCreateModalOpen(true)}
         onModifyIngredient={handleModifyIngredient}
         onDeleteIngredient={handleDeleteIngredient}

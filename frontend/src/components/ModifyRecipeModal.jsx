@@ -24,17 +24,16 @@ export default function ModifyRecipeModal({ recipe, onRecipeModified, onClose })
   }, []);
 
   async function loadRecipeIngredients() {
-    try {
-      setLoadingIngredients(true);
-      const data = await api.getRecipeIngredients(recipe.recipe_id);
-      setIngredients(data);
-      console.log('Ingrédients chargés:', data);
-    } catch (err) {
-      setError(err.message);
-      console.error('Erreur:', err);
-    } finally {
-      setLoadingIngredients(false);
-    }
+  try {
+    setLoadingIngredients(true);
+    const data = await api.getRecipeIngredients(recipe.recipe_id);
+    setIngredients(data);
+  } catch (err) {
+    // Pas d'ingrédients = liste vide, pas une erreur
+    setIngredients([]);
+  } finally {
+    setLoadingIngredients(false);
+  }
   }
 
   // Mettre à jour un champ
