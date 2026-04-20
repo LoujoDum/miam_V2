@@ -1,6 +1,8 @@
 // Importer les packages
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
+const multer = require('multer');
 const pool = require('./db');
 require('dotenv').config();
 
@@ -10,6 +12,36 @@ const app = express();
 // Configuration
 app.use(cors());
 app.use(express.json());
+
+// Servir les images uploadées comme fichiers statiques
+// Quand le navigateur demande /uploads/photo.jpg, Express cherche dans backend/uploads/photo.jpg
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+// Configuration de multer pour l'upload de fichiers
+const storage = multer.diskStorage({
+  // Où stocker les fichiers
+  destination: function (req, file, cb) {
+    cb(null, path.join(__dirname, 'uploads'));
+  },
+  // Comment nommer les fichiers (timestamp + nom original pour éviter les doublons)
+  filename: function (req, file, cb) {
+    const uniqueName = Date.now() + '-' + file.originalname.replace(/\s+/g, '_');
+    cb(null, uniqueName);
+  }
+});
+
+const upload = multer({
+  storage,
+  limits: { fileSize: 5 * 1024 * 1024 }, // Max 5MB
+  fileFilter: function (req, file, cb) {
+    // Accepter seulement les images
+    if (file.mimetype.startsWith('image/')) {
+      cb(null, true);
+    } else {
+      cb(new Error('Seules les images sont acceptées'));
+    }
+  }
+});
 
 const PORT = process.env.SERVER_PORT || 3000;
 
@@ -112,9 +144,9 @@ app.get('/api/ingredients/:id/sources', async(req,res)=>{
  try {
   // Recupère l'ID de l'URL
   const IngredientId = req.params.id;
-  // On interroge SQL en faisant une jointure entre la table ingredients i et ingredient_sources is
+  // On interroge SQL avec jointure, trié par priorité
   const result = await pool.query (
-    'SELECT i.ingredient_id, i.nom, isou.lieu, isou.prix, isou.quantite_achat FROM ingredients i JOIN ingredient_sources isou ON i.ingredient_id = isou.ingredient_id WHERE i.ingredient_id = $1',
+    'SELECT isou.source_id, i.ingredient_id, i.nom, isou.lieu, isou.prix, isou.quantite_achat, isou.priorite FROM ingredients i JOIN ingredient_sources isou ON i.ingredient_id = isou.ingredient_id WHERE i.ingredient_id = $1 ORDER BY isou.priorite ASC, isou.source_id ASC',
     [IngredientId]
   );
  res.json(result.rows); // Retourne [] si pas de sources, c'est normal
@@ -127,7 +159,7 @@ app.get('/api/ingredients/:id/sources', async(req,res)=>{
 app.post('/api/recipes', async (req, res) => {
   try {
     // Récupère les données du body
-    const { nom, auteur, details_recette, lien, tag } = req.body;
+    const { nom, auteur, details_recette, lien, tag, image_url } = req.body;
     
     // Vérifie que "nom" existe
     if (!nom) {
@@ -137,8 +169,8 @@ app.post('/api/recipes', async (req, res) => {
     
     // Insère dans PostgreSQL
     const result = await pool.query(
-      'INSERT INTO recipes (nom, auteur, details_recette, lien, tag) VALUES ($1, $2, $3, $4, $5) RETURNING *',
-      [nom, auteur, details_recette, lien, tag]
+      'INSERT INTO recipes (nom, auteur, details_recette, lien, tag, image_url) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
+      [nom, auteur, details_recette, lien, tag, image_url || null]
     );
     
     // Retourne la nouvelle recette (201 = créée)
@@ -152,7 +184,7 @@ app.post('/api/recipes', async (req, res) => {
 app.put('/api/recipes/:id', async (req, res) => {
   try {
     const recipeId = req.params.id;
-    const { nom, auteur, details_recette, lien, tag } = req.body;
+    const { nom, auteur, details_recette, lien, tag, image_url } = req.body;
     
     if (!nom) {
       res.status(400).json({ error: 'Le champ "nom" est requis' });
@@ -160,8 +192,8 @@ app.put('/api/recipes/:id', async (req, res) => {
     }
     
     const result = await pool.query(
-   'UPDATE recipes SET nom = $1, auteur = $2, details_recette = $3, lien = $4, tag = $5 WHERE recipe_id = $6 RETURNING *',
-    [nom, auteur, details_recette, lien, tag, recipeId]
+   'UPDATE recipes SET nom = $1, auteur = $2, details_recette = $3, lien = $4, tag = $5, image_url = $6 WHERE recipe_id = $7 RETURNING *',
+    [nom, auteur, details_recette, lien, tag, image_url || null, recipeId]
     );
     
     if (result.rows.length === 0) {
@@ -382,7 +414,7 @@ app.post('/api/ingredients/:id/sources', async (req, res) => {
     const ingredientId = req.params.id;
     
     // Récupère les données du body
-    const { lieu, prix, quantite_achat } = req.body;  // ← Sans source_id!
+    const { lieu, prix, quantite_achat, priorite } = req.body;  // ← Ajout priorite
     
     // Vérifie que "lieu" existe
     if (!lieu) {
@@ -392,8 +424,8 @@ app.post('/api/ingredients/:id/sources', async (req, res) => {
     
     // Insère dans PostgreSQL
     const result = await pool.query(
-      'INSERT INTO ingredient_sources (ingredient_id, lieu, prix, quantite_achat) VALUES ($1, $2, $3, $4) RETURNING *',  // ← 4 paramètres!
-      [ingredientId, lieu, prix, quantite_achat]  // ← 4 paramètres!
+      'INSERT INTO ingredient_sources (ingredient_id, lieu, prix, quantite_achat, priorite) VALUES ($1, $2, $3, $4, $5) RETURNING *',
+      [ingredientId, lieu, prix, quantite_achat, priorite || 1]
     );
     
     // Retourne la nouvelle source créée (201 = créé)
@@ -413,12 +445,12 @@ app.put('/api/ingredients/:id/sources/:srcId', async (req, res) => {
     const sourceId = req.params.srcId;
     
     // Récupère les données du body
-    const {lieu, prix, quantite_achat } = req.body;
+    const {lieu, prix, quantite_achat, priorite } = req.body;
     
     // Exécute l'UPDATE avec 2 conditions
     const result = await pool.query(
-      'UPDATE ingredient_sources SET lieu = $1, prix = $2, quantite_achat = $3 WHERE ingredient_id = $4 AND source_id = $5 RETURNING *',
-      [lieu, prix, quantite_achat, ingredientId, sourceId]
+      'UPDATE ingredient_sources SET lieu = $1, prix = $2, quantite_achat = $3, priorite = $4 WHERE ingredient_id = $5 AND source_id = $6 RETURNING *',
+      [lieu, prix, quantite_achat, priorite || 1, ingredientId, sourceId]
     );
     
     // Vérifie si le lien existe
@@ -496,6 +528,169 @@ app.get('/api/stores', async (req, res) => {
       'SELECT DISTINCT lieu FROM ingredient_sources ORDER BY lieu'
     );
     res.json(result.rows.map(r => r.lieu));
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// ============================================
+// UPLOAD D'IMAGES
+// ============================================
+
+// 25 - POST /api/upload
+// Upload une image et retourne l'URL locale
+// upload.single('image') = multer attend UN fichier dans le champ 'image' du formulaire
+app.post('/api/upload', upload.single('image'), (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ error: 'Aucun fichier envoyé' });
+    }
+    // Retourne l'URL relative pour accéder à l'image
+    const imageUrl = `/uploads/${req.file.filename}`;
+    res.status(201).json({ image_url: imageUrl });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// ============================================
+// MEAL PLAN
+// ============================================
+
+// 22 - GET /api/meal-plan?week=YYYY-MM-DD
+// Récupère le plan de la semaine (avec les noms des recettes)
+// Le paramètre ?week= est la date du lundi de la semaine
+app.get('/api/meal-plan', async (req, res) => {
+  try {
+    const weekStart = req.query.week;
+    if (!weekStart) {
+      return res.status(400).json({ error: 'Le paramètre "week" est requis (format: YYYY-MM-DD)' });
+    }
+
+    const result = await pool.query(
+      `SELECT mp.id, mp.week_start, mp.day_of_week, mp.meal_type, mp.recipe_id,
+              r.nom as recipe_name, r.tag
+       FROM meal_plan mp
+       LEFT JOIN recipes r ON mp.recipe_id = r.recipe_id
+       WHERE mp.week_start = $1
+       ORDER BY mp.day_of_week, mp.meal_type`,
+      [weekStart]
+    );
+
+    res.json(result.rows);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// 23 - POST /api/meal-plan
+// Ajoute un repas au planning
+app.post('/api/meal-plan', async (req, res) => {
+  try {
+    const { week_start, day_of_week, meal_type, recipe_id } = req.body;
+
+    if (week_start === undefined || day_of_week === undefined || !meal_type) {
+      return res.status(400).json({ error: 'week_start, day_of_week et meal_type sont requis' });
+    }
+
+    // Supprime l'ancien repas pour ce créneau s'il existe (remplace)
+    await pool.query(
+      'DELETE FROM meal_plan WHERE week_start = $1 AND day_of_week = $2 AND meal_type = $3',
+      [week_start, day_of_week, meal_type]
+    );
+
+    // Si recipe_id est null, on vide juste le créneau
+    if (!recipe_id) {
+      return res.json({ message: 'Créneau vidé' });
+    }
+
+    const result = await pool.query(
+      'INSERT INTO meal_plan (week_start, day_of_week, meal_type, recipe_id) VALUES ($1, $2, $3, $4) RETURNING *',
+      [week_start, day_of_week, meal_type, recipe_id]
+    );
+
+    res.status(201).json(result.rows[0]);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// 24 - DELETE /api/meal-plan/:id
+// Supprime un repas du planning
+app.delete('/api/meal-plan/:id', async (req, res) => {
+  try {
+    const id = req.params.id;
+    const result = await pool.query(
+      'DELETE FROM meal_plan WHERE id = $1 RETURNING *',
+      [id]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Entrée non trouvée' });
+    }
+    res.json(result.rows[0]);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// ============================================
+// GROCERY LIST
+// ============================================
+
+// 26 - GET /api/grocery-list?week=YYYY-MM-DD
+// Génère la liste de courses à partir du planning de la semaine
+// Regroupe par ingrédient, additionne les quantités, et associe les magasins
+app.get('/api/grocery-list', async (req, res) => {
+  try {
+    const weekStart = req.query.week;
+    if (!weekStart) {
+      return res.status(400).json({ error: 'Le paramètre "week" est requis' });
+    }
+
+    // Étape 1: Récupérer tous les ingrédients nécessaires pour la semaine
+    // On JOIN: meal_plan -> recipe_ingredients -> ingredients
+    // On GROUP BY ingrédient pour additionner les quantités
+    const ingredientsResult = await pool.query(
+      `SELECT 
+        i.ingredient_id,
+        i.nom,
+        i.unit_standard,
+        ri.unit,
+        SUM(ri.quantite) as total_quantite,
+        COUNT(mp.id) as nb_recettes
+      FROM meal_plan mp
+      JOIN recipe_ingredients ri ON mp.recipe_id = ri.recipe_id
+      JOIN ingredients i ON ri.ingredient_id = i.ingredient_id
+      WHERE mp.week_start = $1
+      GROUP BY i.ingredient_id, i.nom, i.unit_standard, ri.unit
+      ORDER BY i.nom`,
+      [weekStart]
+    );
+
+    // Étape 2: Pour chaque ingrédient, récupérer SEULEMENT la source prioritaire
+    // ORDER BY priorite ASC = le plus petit chiffre en premier (1 = premier choix)
+    // DISTINCT ON (ingredient_id) = ne garder que la première ligne par ingrédient
+    const sourcesResult = await pool.query(
+      `SELECT DISTINCT ON (ingredient_id) 
+        ingredient_id, lieu, prix, quantite_achat, priorite
+       FROM ingredient_sources
+       ORDER BY ingredient_id, priorite ASC, source_id ASC`
+    );
+
+    // Créer un map: un seul magasin par ingrédient (le prioritaire)
+    const sourcesMap = {};
+    for (const source of sourcesResult.rows) {
+      sourcesMap[source.ingredient_id] = source;
+    }
+
+    // Combiner ingrédients + source prioritaire
+    const groceryList = ingredientsResult.rows.map(ing => ({
+      ...ing,
+      source: sourcesMap[ing.ingredient_id] || null
+    }));
+
+    res.json(groceryList);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

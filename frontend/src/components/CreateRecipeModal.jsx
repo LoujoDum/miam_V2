@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import * as api from '../services/api';
 import SelectIngredientModal from './SelectIngredientModal';
+import ImagePicker from './ImagePicker';
 
 export default function CreateRecipeModal({ onRecipeCreated, onClose }) {
   // État imbriqué (Option B)
@@ -10,6 +11,7 @@ export default function CreateRecipeModal({ onRecipeCreated, onClose }) {
     tag: '',
     lien: '',
     details_recette: '',
+    image_url: null,
     ingredients: []
   });
 
@@ -43,7 +45,8 @@ export default function CreateRecipeModal({ onRecipeCreated, onClose }) {
         auteur: recipe.auteur || null,
         details_recette: recipe.details_recette || null,
         lien: recipe.lien || null,
-        tag: recipe.tag || null
+        tag: recipe.tag || null,
+        image_url: recipe.image_url || null
       });
 
       console.log('Recette créée:', newRecipe);
@@ -97,6 +100,7 @@ export default function CreateRecipeModal({ onRecipeCreated, onClose }) {
       tag: '',
       lien: '',
       details_recette: '',
+      image_url: null,
       ingredients: []
     });
     setError(null);
@@ -121,6 +125,12 @@ export default function CreateRecipeModal({ onRecipeCreated, onClose }) {
               {error}
             </div>
           )}
+
+          {/* Image */}
+          <ImagePicker
+            currentImageUrl={recipe.image_url}
+            onImageChange={(url) => handleInputChange('image_url', url)}
+          />
 
           {/* Recipe name */}
           <div>

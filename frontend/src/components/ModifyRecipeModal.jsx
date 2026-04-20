@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import SelectIngredientModal from './SelectIngredientModal';
+import ImagePicker from './ImagePicker';
 import * as api from '../services/api';
 
 export default function ModifyRecipeModal({ recipe, onRecipeModified, onClose }) {
@@ -9,7 +10,8 @@ export default function ModifyRecipeModal({ recipe, onRecipeModified, onClose })
     auteur: recipe.auteur || '',
     tag: recipe.tag || '',
     lien: recipe.lien || '',
-    details_recette: recipe.details_recette || ''
+    details_recette: recipe.details_recette || '',
+    image_url: recipe.image_url || null
   });
 
   const [ingredients, setIngredients] = useState([]);
@@ -73,7 +75,8 @@ export default function ModifyRecipeModal({ recipe, onRecipeModified, onClose })
         auteur: formData.auteur || null,
         details_recette: formData.details_recette || null,
         lien: formData.lien || null,
-        tag: formData.tag || null
+        tag: formData.tag || null,
+        image_url: formData.image_url || null
       });
 
       console.log('Recette modifiée');
@@ -171,6 +174,12 @@ export default function ModifyRecipeModal({ recipe, onRecipeModified, onClose })
               {error}
             </div>
           )}
+
+          {/* Image */}
+          <ImagePicker
+            currentImageUrl={formData.image_url}
+            onImageChange={(url) => handleInputChange('image_url', url)}
+          />
 
           {/* Recipe name */}
           <div>

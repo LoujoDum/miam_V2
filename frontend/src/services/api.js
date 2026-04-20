@@ -25,6 +25,14 @@ async function request(method, endpoint, body = null) {
 }
 
 // ============================================
+// GROCERY LIST
+// ============================================
+
+export function getGroceryList(weekStart) {
+  return request('GET', `/grocery-list?week=${weekStart}`);
+}
+
+// ============================================
 // RECIPES
 // ============================================
 
@@ -125,4 +133,43 @@ export function getSourcesByIngredient() {
 
 export function getStores() {
   return request('GET', '/stores');
+}
+
+// ============================================
+// MEAL PLAN
+// ============================================
+
+export function getMealPlan(weekStart) {
+  return request('GET', `/meal-plan?week=${weekStart}`);
+}
+
+export function setMeal(data) {
+  return request('POST', '/meal-plan', data);
+}
+
+export function deleteMeal(id) {
+  return request('DELETE', `/meal-plan/${id}`);
+}
+
+// ============================================
+// UPLOAD D'IMAGES
+// ============================================
+
+// L'upload est spécial : on ne peut pas utiliser JSON, il faut FormData
+export async function uploadImage(file) {
+  const formData = new FormData();
+  formData.append('image', file);
+
+  const response = await fetch(`${API_BASE_URL}/upload`, {
+    method: 'POST',
+    // PAS de Content-Type header! Le navigateur le met automatiquement avec le boundary pour FormData
+    body: formData
+  });
+
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.error || 'Erreur upload');
+  }
+
+  return response.json();
 }

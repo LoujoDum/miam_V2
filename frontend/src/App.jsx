@@ -3,27 +3,24 @@ import Header from './components/Header';
 import RecipeList from './pages/RecipeList';
 import IngredientList from './pages/IngredientList';
 import IngredientSourceList from './pages/IngredientSourceList';
+import CalendarPage from './pages/CalendarPage';
+import GroceryListPage from './pages/GroceryListPage';
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState('recipes');
+  const [activeTab, setActiveTab] = useState('calendar');
 
   return (
     <div className="min-h-screen bg-gray-50">
       <Header activeTab={activeTab} setActiveTab={setActiveTab} />
       
       <main className="max-w-6xl mx-auto px-8 py-12">
-        {activeTab === 'recipes' && <RecipeList />}  {/* ← Utiliser le composant */}
+        {activeTab === 'calendar' && <CalendarPage />}
         
-        {activeTab === 'ingredients' && <IngredientList />} {/* ← Utiliser le composant */}
+        {activeTab === 'recipes' && <RecipeList />}
         
-        {activeTab === 'grocery' && <IngredientSourceList />}
+        {activeTab === 'ingredients' && <IngredientList />}
         
-        {activeTab === 'calendar' && (
-          <div>
-            <h2 className="text-2xl font-bold mb-4">Calendar</h2>
-            <p className="text-gray-600">Le calendrier va ici</p>
-          </div>
-        )}
+        {activeTab === 'grocery' && <GroceryListPage />}
       </main>
     </div>
   );

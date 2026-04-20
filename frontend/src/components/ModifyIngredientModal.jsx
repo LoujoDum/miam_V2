@@ -21,6 +21,7 @@ export default function ModifyIngredientModal({ ingredient, onIngredientModified
     fibre: ingredient.fibre || ''
   });
 
+  // Chaque source a: { lieu, prix, quantite_achat, source_id?, isNew?, priorite }
   const [sources, setSources] = useState([]);
   const [showAddSource, setShowAddSource] = useState(false);
   const [selectedStores, setSelectedStores] = useState({});
@@ -34,6 +35,7 @@ export default function ModifyIngredientModal({ ingredient, onIngredientModified
   async function loadSources() {
     try {
       const data = await api.getIngredientSources(ingredient.ingredient_id);
+      // Les sources arrivent déjà triées par priorité depuis le backend
       setSources(data);
     } catch (err) {
       setSources([]);
@@ -64,10 +66,12 @@ export default function ModifyIngredientModal({ ingredient, onIngredientModified
   }
 
   function handleConfirmAddSources() {
-    const newSources = Object.entries(selectedStores).map(([lieu, details]) => ({
+    const currentLength = sources.length;
+    const newSources = Object.entries(selectedStores).map(([lieu, details], i) => ({
       lieu,
       prix: details.prix,
       quantite_achat: details.quantite_achat,
+      priorite: currentLength + i + 1, // Priorité après les existantes
       isNew: true
     }));
     setSources(prev => [...prev, ...newSources]);
@@ -79,6 +83,26 @@ export default function ModifyIngredientModal({ ingredient, onIngredientModified
     setSources(prev => prev.filter((_, i) => i !== index));
   }
 
+  // ─── Réordonner les sources (gérer les priorités) ───
+  function handleMoveUp(index) {
+    if (index === 0) return; // Déjà en premier
+    setSources(prev => {
+      const updated = [...prev];
+      // Échange la position avec l'élément au-dessus
+      [updated[index - 1], updated[index]] = [updated[index], updated[index - 1]];
+      return updated;
+    });
+  }
+
+  function handleMoveDown(index) {
+    if (index === sources.length - 1) return; // Déjà en dernier
+    setSources(prev => {
+      const updated = [...prev];
+      [updated[index], updated[index + 1]] = [updated[index + 1], updated[index]];
+      return updated;
+    });
+  }
+
   async function handleSaveIngredient() {
     try {
       if (!formData.nom.trim()) {
@@ -88,6 +112,7 @@ export default function ModifyIngredientModal({ ingredient, onIngredientModified
       setLoading(true);
       setError(null);
 
+      // 1. Mettre à jour l'ingrédient
       await api.updateIngredient(ingredient.ingredient_id, {
         nom: formData.nom,
         unit_standard: formData.unit_standard || null,
@@ -95,8 +120,10 @@ export default function ModifyIngredientModal({ ingredient, onIngredientModified
         fibre: formData.fibre ? parseFloat(formData.fibre) : null
       });
 
+      // 2. Synchroniser les sources
       const currentSources = await api.getIngredientSources(ingredient.ingredient_id);
 
+      // Supprimer les sources qui ne sont plus dans la liste
       for (const current of currentSources) {
         const stillExists = sources.some(s => s.source_id === current.source_id);
         if (!stillExists) {
@@ -104,12 +131,26 @@ export default function ModifyIngredientModal({ ingredient, onIngredientModified
         }
       }
 
-      for (const source of sources) {
+      // Ajouter les nouvelles sources et mettre à jour les priorités
+      for (let i = 0; i < sources.length; i++) {
+        const source = sources[i];
+        const newPriorite = i + 1; // Position dans la liste = priorité
+
         if (source.isNew) {
+          // Nouvelle source : créer
           await api.addSource(ingredient.ingredient_id, {
             lieu: source.lieu,
             prix: source.prix ? parseFloat(source.prix) : null,
-            quantite_achat: source.quantite_achat || null
+            quantite_achat: source.quantite_achat || null,
+            priorite: newPriorite
+          });
+        } else if (source.source_id) {
+          // Source existante : mettre à jour (priorité peut avoir changé)
+          await api.updateSource(ingredient.ingredient_id, source.source_id, {
+            lieu: source.lieu,
+            prix: source.prix ? parseFloat(source.prix) : null,
+            quantite_achat: source.quantite_achat || null,
+            priorite: newPriorite
           });
         }
       }
@@ -192,25 +233,62 @@ export default function ModifyIngredientModal({ ingredient, onIngredientModified
             />
           </div>
 
-          {/* Sources */}
+          {/* Sources avec priorité */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Sources</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Sources</label>
+            <p className="text-xs text-gray-500 mb-2">
+              Le premier magasin = préféré pour la liste de courses. Utilise ▲▼ pour réordonner.
+            </p>
 
-            {/* Liste des sources existantes */}
+            {/* Liste des sources ordonnées par priorité */}
             {sources.length > 0 && (
               <div className="space-y-2 mb-3">
                 {sources.map((source, index) => (
-                  <div key={index} className="flex items-center justify-between bg-gray-50 px-4 py-2 rounded-lg border border-gray-200">
-                    <div>
-                      <p className="font-medium text-gray-900">{source.lieu}</p>
+                  <div key={index} className={`flex items-center gap-2 px-3 py-2 rounded-lg border ${
+                    index === 0 
+                      ? 'bg-green-50 border-green-300' 
+                      : 'bg-gray-50 border-gray-200'
+                  }`}>
+                    {/* Boutons réordonner */}
+                    <div className="flex flex-col gap-0.5">
+                      <button
+                        onClick={() => handleMoveUp(index)}
+                        disabled={index === 0}
+                        className="text-xs px-1 py-0.5 rounded hover:bg-gray-200 disabled:opacity-30 disabled:cursor-not-allowed"
+                        title="Monter"
+                      >
+                        ▲
+                      </button>
+                      <button
+                        onClick={() => handleMoveDown(index)}
+                        disabled={index === sources.length - 1}
+                        className="text-xs px-1 py-0.5 rounded hover:bg-gray-200 disabled:opacity-30 disabled:cursor-not-allowed"
+                        title="Descendre"
+                      >
+                        ▼
+                      </button>
+                    </div>
+
+                    {/* Info source */}
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2">
+                        {index === 0 && (
+                          <span className="text-xs px-1.5 py-0.5 bg-green-200 text-green-800 rounded font-medium">
+                            Préféré
+                          </span>
+                        )}
+                        <p className="font-medium text-gray-900 truncate">{source.lieu}</p>
+                      </div>
                       <p className="text-sm text-gray-600">
                         {source.prix ? `${source.prix}$` : '-'}
                         {source.quantite_achat ? ` · ${source.quantite_achat}` : ''}
                       </p>
                     </div>
+
+                    {/* Bouton supprimer */}
                     <button
                       onClick={() => handleRemoveSource(index)}
-                      className="text-red-600 hover:text-red-700 font-bold"
+                      className="text-red-600 hover:text-red-700 font-bold flex-shrink-0"
                     >
                       ✕
                     </button>
@@ -224,7 +302,7 @@ export default function ModifyIngredientModal({ ingredient, onIngredientModified
               <div className="border border-blue-200 rounded-lg p-3 mb-3 bg-blue-50 space-y-2">
                 <p className="text-sm font-medium text-gray-700">Select stores:</p>
 
-                {STORES.map(store => (
+                {STORES.filter(store => !sources.some(s => s.lieu === store)).map(store => (
                   <div key={store}>
                     <div className="flex items-center gap-2">
                       <input
